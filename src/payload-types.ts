@@ -121,6 +121,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
+  roles?: ('admin' | 'editor')[] | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -145,7 +146,9 @@ export interface User {
  */
 export interface Media {
   id: number;
+  type: 'normal' | 'adaptive_video_stream';
   alt: string;
+  adaptiveVideoStreamIndexFile?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -235,6 +238,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  roles?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -257,7 +261,9 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  type?: T;
   alt?: T;
+  adaptiveVideoStreamIndexFile?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
