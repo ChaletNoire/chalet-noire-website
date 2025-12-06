@@ -86,8 +86,12 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'global-config': GlobalConfig;
+  };
+  globalsSelect: {
+    'global-config': GlobalConfigSelect<false> | GlobalConfigSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -313,6 +317,34 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "global-config".
+ */
+export interface GlobalConfig {
+  id: number;
+  Title: string;
+  SubTitle: string;
+  BannerImage?: (number | null) | Media;
+  Herald?: (number | null) | Media;
+  Logo: number | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "global-config_select".
+ */
+export interface GlobalConfigSelect<T extends boolean = true> {
+  Title?: T;
+  SubTitle?: T;
+  BannerImage?: T;
+  Herald?: T;
+  Logo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
