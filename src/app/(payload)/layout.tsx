@@ -5,9 +5,11 @@ import '@payloadcms/next/css'
 import type { ServerFunctionClient } from 'payload'
 import { handleServerFunctions, RootLayout } from '@payloadcms/next/layouts'
 import React from 'react'
+import { lyon } from '@/lib/fonts'
 
 import { importMap } from './admin/importMap.js'
 import './custom.scss'
+import '../styles/payloadStyles.css'
 
 type Args = {
   children: React.ReactNode
@@ -23,7 +25,12 @@ const serverFunction: ServerFunctionClient = async function (args) {
 }
 
 const Layout = ({ children }: Args) => (
-  <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
+  <RootLayout
+    config={config}
+    importMap={importMap}
+    serverFunction={serverFunction}
+    htmlProps={{ className: lyon.variable }}
+  >
     {children}
   </RootLayout>
 )

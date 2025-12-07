@@ -1,0 +1,47 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+/* @import "tailwindcss/preflight.css" layer(base); */
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Lyon font is now handled by Next.js font optimization */
+  
+  /* Ensure Lyon font is applied to elements with font-lyon class */
+  .font-lyon {
+    font-family: var(--font-lyon), serif !important;
+  }
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+
+:root {
+  --font-body: 'Georgia'; 
+}
+
+h1 {
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.5rem;
+  }
+
+/* center the field labels */
+.field-label {
+  display: block;
+  text-align: center;
+ }
+
+/* button no background color or border same css class as link */
+button{
+  background-color: transparent;
+  color: #000;
+  text-decoration: underline;
+}
+
+.btn {
+  background-color: transparent;
+  color: #000;
+  text-decoration: underline;
+}
+
+#field-theme, #field-label {
+  display: none;
+}

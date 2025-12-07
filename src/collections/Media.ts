@@ -41,5 +41,15 @@ export const Media: CollectionConfig = {
     // These are not supported on Workers yet due to lack of sharp
     crop: false,
     focalPoint: false,
+    // Fix Content-Type headers in development mode
+    // The R2 storage adapter doesn't set headers in dev due to Miniflare bug
+    // See: https://github.com/payloadcms/payload/issues/7624
+    modifyResponseHeaders({ headers }) {
+      // Fix SVG served as application/xml
+      if (headers.get('content-type') === 'application/xml') {
+        headers.set('content-type', 'image/svg+xml; charset=utf-8')
+      }
+      return headers
+    },
   },
 }

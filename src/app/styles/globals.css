@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+/* Lyon font is now handled by Next.js font optimization */
+
+/* Ensure Lyon font is applied to elements with font-lyon class */
+.font-lyon {
+  font-family: var(--font-lyon), serif !important;
+}
+
+/* Arial Black with Arial Bold fallback */
+.font-arial-black {
+  font-family: "Arial Black", Arial, sans-serif;
+  font-weight: bold;
+}
+
+/* Times New Roman with serif fallback */
+.font-times-new-roman {
+  font-family: "Times New Roman", Times, serif;
+}
+
+@layer base {
+
+  hr {
+    @apply border-t-1 border-[#E5E5E5] my-8;
+  }
+
+  a {
+    @apply underline;
+    @apply decoration-1;
+    @apply relative; /* Ensure the positioning context for ::after */
+  }
+
+  a::after::hover {
+    content: attr(data-text); /* Copy the content of the 'data-text' attribute */
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 1; /* Ensure it's visible */
+    filter: blur(8px); /* Slight blur to test */
+    color: inherit; /* Use the same color as the text */
+    z-index: -1; /* Ensure it appears behind the original text */
+  }
+}
+
+@layer utilities {
+
+  .banner-border-2 {
+    @apply border-2 border-blue-600 border-solid;
+  }
+
+  .banner-border-4 {
+    @apply border-4 border-blue-600 border-solid;
+  }
+
+  .text-align-last-right {
+    text-align-last: right;
+  }
+
+  .text-align-last-left {
+    text-align-last: left;
+  }
+
+  .text-align-last-center {
+    text-align-last: center;
+  }
+
+  .text-align-last-justify {
+    text-align-last: justify;
+  }
+
+  .text-justify-last-right {
+    text-align-last: right;
+  }
+
+  .text-justify-last-left {
+    text-align-last: left;
+  }
+
+  .text-justify-last-center {
+    text-align-last: center;
+  }
+
+  .text-justify-last-justify {
+    text-align-last: justify;
+  }
+}
+
+/* CSS-only logo rotation */
+.logo-container {
+  perspective: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.logo-rotating {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: rotateAnimation 15s linear infinite;
+}
+
+.logo-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.logo-front {
+  transform: rotateY(0deg);
+}
+
+.logo-back {
+  transform: rotateY(180deg);
+}
+
+@keyframes rotateAnimation {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
