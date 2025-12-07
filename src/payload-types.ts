@@ -89,9 +89,19 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'global-config': GlobalConfig;
+    'landing-page': LandingPage;
+    broadcast: Broadcast;
+    socials: Social;
+    'blog-page': BlogPage;
+    contact: Contact;
   };
   globalsSelect: {
     'global-config': GlobalConfigSelect<false> | GlobalConfigSelect<true>;
+    'landing-page': LandingPageSelect<false> | LandingPageSelect<true>;
+    broadcast: BroadcastSelect<false> | BroadcastSelect<true>;
+    socials: SocialsSelect<false> | SocialsSelect<true>;
+    'blog-page': BlogPageSelect<false> | BlogPageSelect<true>;
+    contact: ContactSelect<false> | ContactSelect<true>;
   };
   locale: null;
   user: User & {
@@ -335,6 +345,65 @@ export interface GlobalConfig {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing-page".
+ */
+export interface LandingPage {
+  id: number;
+  LinkToBlog?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "broadcast".
+ */
+export interface Broadcast {
+  id: number;
+  Live?: boolean | null;
+  'Live Embed': string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "socials".
+ */
+export interface Social {
+  id: number;
+  SocialMediaLinks?:
+    | {
+        name?: string | null;
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-page".
+ */
+export interface BlogPage {
+  id: number;
+  IntroText?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact".
+ */
+export interface Contact {
+  id: number;
+  'Booking Email': string;
+  'Booking Mail Subject Line'?: string | null;
+  'Contact Email': string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "global-config_select".
  */
 export interface GlobalConfigSelect<T extends boolean = true> {
@@ -343,6 +412,65 @@ export interface GlobalConfigSelect<T extends boolean = true> {
   BannerImage?: T;
   Herald?: T;
   Logo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing-page_select".
+ */
+export interface LandingPageSelect<T extends boolean = true> {
+  LinkToBlog?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "broadcast_select".
+ */
+export interface BroadcastSelect<T extends boolean = true> {
+  Live?: T;
+  'Live Embed'?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "socials_select".
+ */
+export interface SocialsSelect<T extends boolean = true> {
+  SocialMediaLinks?:
+    | T
+    | {
+        name?: T;
+        url?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-page_select".
+ */
+export interface BlogPageSelect<T extends boolean = true> {
+  IntroText?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_select".
+ */
+export interface ContactSelect<T extends boolean = true> {
+  'Booking Email'?: T;
+  'Booking Mail Subject Line'?: T;
+  'Contact Email'?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

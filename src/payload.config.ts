@@ -11,6 +11,11 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 
 import { GlobalConfig } from './globals/GlobalConfig'
+import { LandingPage } from './globals/LandingPage'
+import { Broadcast } from './globals/Broadcast'
+import { Socials } from './globals/Socials'
+import { BlogPage } from './globals/BlogPage'
+import { Contact } from './globals/Contact'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -55,7 +60,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media],
-  globals: [GlobalConfig],
+  globals: [GlobalConfig, LandingPage, Broadcast, Socials, BlogPage, Contact],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
