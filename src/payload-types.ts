@@ -92,7 +92,6 @@ export interface Config {
     'landing-page': LandingPage;
     broadcast: Broadcast;
     socials: Social;
-    'blog-page': BlogPage;
     contact: Contact;
   };
   globalsSelect: {
@@ -100,7 +99,6 @@ export interface Config {
     'landing-page': LandingPageSelect<false> | LandingPageSelect<true>;
     broadcast: BroadcastSelect<false> | BroadcastSelect<true>;
     socials: SocialsSelect<false> | SocialsSelect<true>;
-    'blog-page': BlogPageSelect<false> | BlogPageSelect<true>;
     contact: ContactSelect<false> | ContactSelect<true>;
   };
   locale: null;
@@ -340,6 +338,7 @@ export interface GlobalConfig {
   BannerImage?: (number | null) | Media;
   Herald?: (number | null) | Media;
   Logo: number | Media;
+  IntroText?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -382,16 +381,6 @@ export interface Social {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blog-page".
- */
-export interface BlogPage {
-  id: number;
-  IntroText?: string | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "contact".
  */
 export interface Contact {
@@ -412,6 +401,7 @@ export interface GlobalConfigSelect<T extends boolean = true> {
   BannerImage?: T;
   Herald?: T;
   Logo?: T;
+  IntroText?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -449,16 +439,6 @@ export interface SocialsSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blog-page_select".
- */
-export interface BlogPageSelect<T extends boolean = true> {
-  IntroText?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

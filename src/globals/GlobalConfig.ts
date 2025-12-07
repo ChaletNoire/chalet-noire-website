@@ -37,5 +37,9 @@ export const GlobalConfig: GlobalConfigType = {
       relationTo: 'media',
       required: true,
     },
+    {
+      name: 'IntroText',
+      type: 'text',
+    },
   ],
 }

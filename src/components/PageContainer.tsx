@@ -5,13 +5,13 @@ import Footer from '@/components/Footer'
 
 interface PageContainerProps {
   children: React.ReactNode
-  siteInfo: GlobalConfig | null
+  globalConfig: GlobalConfig | null
 }
 
-export default function PageContainer({ children, siteInfo }: PageContainerProps) {
+export default function PageContainer({ children, globalConfig }: PageContainerProps) {
   return (
     <div className="max-w-4xl w-full">
-      {siteInfo && <Banner siteInfo={siteInfo} />}
+      {globalConfig && <Banner globalConfig={globalConfig} />}
       <div className="w-full pt-6">{children}</div>
       <Footer />
     </div>

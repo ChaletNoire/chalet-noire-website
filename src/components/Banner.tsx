@@ -24,7 +24,7 @@ const Title = ({ title, subTitle }: { title?: string; subTitle?: string }) => {
 
 function Navigation() {
   return (
-    <div className="w-full md:w-fit grid grid-cols-[1fr_1fr] gap-2 md:gap-4 text-base">
+    <div className="w-full flex justify-end gap-2 md:gap-4 text-base">
       <NavLink href="/blog">Blog(40)</NavLink>
       <NavLink href="/about" className="justify-self-center">
         Shows(10)
@@ -55,14 +55,17 @@ function BannerImage({ image }: { image: (number | null) | Media | undefined }) 
   )
 }
 
-export default function Banner({ siteInfo }: { siteInfo: GlobalConfig }) {
+export default function Banner({ globalConfig }: { globalConfig: GlobalConfig }) {
   return (
     <div className="w-full pr-2 pl-1 md:pl-2 md:px-4 py-2 banner-border-4">
       <div className="grid grid-cols-[auto_1fr]">
-        <Herald image={siteInfo?.Herald} />
+        <Herald image={globalConfig?.Herald} />
         <div className="w-full grid grid-cols-[auto_1fr] gap-x-2 md:h-[100px]">
-          <BannerImage image={siteInfo?.BannerImage} />
-          <Title title={siteInfo?.Title ?? undefined} subTitle={siteInfo?.SubTitle ?? undefined} />
+          <BannerImage image={globalConfig?.BannerImage} />
+          <Title
+            title={globalConfig?.Title ?? undefined}
+            subTitle={globalConfig?.SubTitle ?? undefined}
+          />
           <div className="col-span-2 mb-[-6px] md:mb-[-6px] align-self-end w-full flex justify-end">
             <Navigation />
           </div>

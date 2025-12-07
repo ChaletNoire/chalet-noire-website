@@ -48,15 +48,17 @@ async function Booking() {
 
 async function Info() {
   const payload = await getPayload({ config })
-  const blogPage = await payload.findGlobal({
-    slug: 'blog-page',
+  const globalConfig = await payload.findGlobal({
+    slug: 'global-config',
   })
-  const infoText = blogPage?.IntroText
+  const infoText = (globalConfig as any)?.IntroText
   return (
     <div className="w-full h-full flex flex-col text-base">
       <p className="text-justify text-justify-last-left md:max-w-[600px]">{infoText}</p>
       <Booking />
-      <OutsideLinks />
+      <div className="w-full pt-4">
+        <OutsideLinks />
+      </div>
     </div>
   )
 }
@@ -65,7 +67,7 @@ export default function Blog() {
   return (
     <div>
       <Info />
-      <hr />
+      <hr className="mt-2" />
     </div>
   )
 }

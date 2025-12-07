@@ -14,7 +14,6 @@ import { GlobalConfig } from './globals/GlobalConfig'
 import { LandingPage } from './globals/LandingPage'
 import { Broadcast } from './globals/Broadcast'
 import { Socials } from './globals/Socials'
-import { BlogPage } from './globals/BlogPage'
 import { Contact } from './globals/Contact'
 
 const filename = fileURLToPath(import.meta.url)
@@ -52,15 +51,53 @@ export default buildConfig({
       ],
       graphics: {
         Logo: '/components/graphics/Logo',
+        Icon: '/components/graphics/Icon',
       },
     },
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    meta: {
+      title: 'Chalet Noire - Admin Panel',
+
+      description: 'Chalet Noire - Admin Panel',
+      icons: [
+        {
+          rel: 'icon',
+          type: 'image/x-icon',
+          url: '/favicon.ico',
+        },
+        {
+          rel: 'shortcut icon',
+          url: '/favicon.ico',
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '32x32',
+          url: '/favicon-32x32.png',
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '16x16',
+          url: '/favicon-16x16.png',
+        },
+        {
+          rel: 'apple-touch-icon',
+          sizes: '180x180',
+          url: '/apple-touch-icon.png',
+        },
+        {
+          rel: 'manifest',
+          url: '/site.webmanifest',
+        },
+      ],
+    },
   },
   collections: [Users, Media],
-  globals: [GlobalConfig, LandingPage, Broadcast, Socials, BlogPage, Contact],
+  globals: [GlobalConfig, LandingPage, Broadcast, Socials, Contact],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
