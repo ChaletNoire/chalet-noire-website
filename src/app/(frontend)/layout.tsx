@@ -29,11 +29,11 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="manifest" href="/site.webmanifest" />
       </head>
-      <body className="font-times-new-roman">
+      <body className="font-times-new-roman h-full">
         <ConditionalWrapper
           homePageContent={children}
           otherPagesContent={
-            <div className="py-2 px-4 flex flex-col items-center">
+            <div className="py-2 px-4 flex flex-col items-center h-full">
               <PageContainer globalConfig={globalConfig}>{children}</PageContainer>
             </div>
           }
