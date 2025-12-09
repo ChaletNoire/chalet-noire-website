@@ -1,7 +1,9 @@
 export default function InfoPage() {
   return (
     <div className="w-full h-full flex flex-col gap-4 h-full">
+      <div>
       Site design and development by <a href="https://suckrowpierre.com">Pierre-Louis Suckrow</a>
+      </div>
       <div>
         Fonts used:
         <ul>
