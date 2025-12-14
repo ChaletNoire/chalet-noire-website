@@ -196,11 +196,6 @@ export interface Post {
     };
     [k: string]: unknown;
   } | null;
-  mediaSource?: ('self_hosted' | 'embedded' | 'only_text') | null;
-  media?: (number | Media)[] | null;
-  embeddedMedia?: string | null;
-  Alignment?: ('left' | 'right' | 'center') | null;
-  maxMediaHeight?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -330,11 +325,6 @@ export interface MediaSelect<T extends boolean = true> {
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
   content?: T;
-  mediaSource?: T;
-  media?: T;
-  embeddedMedia?: T;
-  Alignment?: T;
-  maxMediaHeight?: T;
   updatedAt?: T;
   createdAt?: T;
 }

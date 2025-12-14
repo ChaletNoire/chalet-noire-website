@@ -69,6 +69,7 @@ async function getPosts() {
   const posts = await payload.find({
     collection: 'posts',
     sort: '-createdAt',
+    depth: 2, // Populate relationships including images in rich text
   })
   return posts
 }
