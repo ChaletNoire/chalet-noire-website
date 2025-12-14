@@ -1,6 +1,7 @@
 import { getPayload } from 'payload'
 import React from 'react'
 import config from '@/payload.config'
+import Post from '@/components/Post'
 
 async function OutsideLinks() {
   const payload = await getPayload({ config })
@@ -63,11 +64,28 @@ async function Info() {
   )
 }
 
-export default function Blog() {
+async function getPosts() {
+  const payload = await getPayload({ config })
+  const posts = await payload.find({
+    collection: 'posts',
+    sort: '-createdAt',
+  })
+  return posts
+}
+
+export default async function Blog() {
+  const posts = await getPosts()
   return (
     <div>
       <Info />
       <hr className="mt-2" />
+      {posts.docs.map((post) => (
+        <>
+          <div className="w-full py-8" key={post.id}>
+            <Post key={post.id} post={post} />
+          </div>
+        </>
+      ))}
     </div>
   )
 }

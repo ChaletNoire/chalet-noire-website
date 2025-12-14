@@ -8,7 +8,7 @@ export const Media: CollectionConfig = {
   },
   fields: [
     {
-      name: 'type',
+      name: 'deliveryFormat',
       type: 'select',
       options: [
         {
