@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     posts: Post;
+    gallery: Gallery;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    gallery: GallerySelect<false> | GallerySelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -164,6 +166,7 @@ export interface Media {
   deliveryFormat: 'normal' | 'adaptive_video_stream';
   alt: string;
   adaptiveVideoStreamIndexFile?: string | null;
+  orientation?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -196,6 +199,20 @@ export interface Post {
     };
     [k: string]: unknown;
   } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery".
+ */
+export interface Gallery {
+  id: number;
+  title: string;
+  VisualMedia: {
+    media: number | Media;
+    id?: string | null;
+  }[];
   updatedAt: string;
   createdAt: string;
 }
@@ -234,6 +251,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'gallery';
+        value: number | Gallery;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -308,6 +329,7 @@ export interface MediaSelect<T extends boolean = true> {
   deliveryFormat?: T;
   alt?: T;
   adaptiveVideoStreamIndexFile?: T;
+  orientation?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -325,6 +347,21 @@ export interface MediaSelect<T extends boolean = true> {
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
   content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery_select".
+ */
+export interface GallerySelect<T extends boolean = true> {
+  title?: T;
+  VisualMedia?:
+    | T
+    | {
+        media?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

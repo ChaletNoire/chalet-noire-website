@@ -10,6 +10,7 @@ import { r2Storage } from '@payloadcms/storage-r2'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Posts } from './collections/Posts'
+import { Gallery } from './collections/Gallery'
 
 import { GlobalConfig } from './globals/GlobalConfig'
 import { LandingPage } from './globals/LandingPage'
@@ -97,7 +98,7 @@ export default buildConfig({
       ],
     },
   },
-  collections: [Users, Media, Posts],
+  collections: [Users, Media, Posts, Gallery],
   globals: [GlobalConfig, LandingPage, Broadcast, Socials, Contact],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

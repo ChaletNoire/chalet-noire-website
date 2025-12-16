@@ -1,10 +1,27 @@
 import type { CollectionConfig } from 'payload'
-import { MediaType } from '../enums/MediaType'
+import { MediaOrientation, DeliveryFormat } from '@/enums/Media'
 
 export const Media: CollectionConfig = {
   slug: 'media',
   access: {
     read: () => true,
+  },
+  hooks: {
+    beforeChange: [
+      ({ data }) => {
+        // Automatically set orientation based on image dimensions
+        if (data?.width && data?.height) {
+          if (data.width > data.height) {
+            data.orientation = MediaOrientation.LANDSCAPE
+          } else if (data.height > data.width) {
+            data.orientation = MediaOrientation.PORTRAIT
+          } else {
+            data.orientation = MediaOrientation.SQUARE
+          }
+        }
+        return data
+      },
+    ],
   },
   fields: [
     {
@@ -13,15 +30,15 @@ export const Media: CollectionConfig = {
       options: [
         {
           label: 'Normal',
-          value: MediaType.NORMAL,
+          value: DeliveryFormat.NORMAL,
         },
         {
           label: 'Adaptive Video Stream',
-          value: MediaType.ADAPTIVE_VIDEO_STREAM,
+          value: DeliveryFormat.ADAPTIVE_VIDEO_STREAM,
         },
       ],
       required: true,
-      defaultValue: MediaType.NORMAL,
+      defaultValue: DeliveryFormat.NORMAL,
     },
     {
       name: 'alt',
@@ -33,7 +50,14 @@ export const Media: CollectionConfig = {
       type: 'text',
       required: false,
       admin: {
-        condition: (data) => data?.type === MediaType.ADAPTIVE_VIDEO_STREAM,
+        condition: (data) => data?.deliveryFormat === DeliveryFormat.ADAPTIVE_VIDEO_STREAM,
+      },
+    },
+    {
+      name: 'orientation',
+      type: 'text',
+      admin: {
+        hidden: true,
       },
     },
   ],

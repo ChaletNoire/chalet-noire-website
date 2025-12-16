@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload'
-import { MediaSource } from '@/enums/PostTypes'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',

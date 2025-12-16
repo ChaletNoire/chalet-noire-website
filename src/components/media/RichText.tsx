@@ -6,8 +6,10 @@ import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical
 import type { SerializedUploadNode } from '@payloadcms/richtext-lexical'
 import type { SerializedAutoLinkNode, SerializedLinkNode } from '@payloadcms/richtext-lexical'
 import type { Media } from '@/payload-types'
-import { ExpandableImage } from './ExpandableImage'
 import { YouTubeEmbed, getYouTubeVideoId } from './YouTubeEmbed'
+import PostImage from './PostImage'
+import { isMedia, getMediaType, MediaType } from './utils'
+import { PostVisualMedia } from './PostMedia'
 
 type Props = {
   data: SerializedEditorState
@@ -23,26 +25,11 @@ const jsxConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
       return null
     }
 
-    const media = uploadNode.value as Media
-
-    // For non-image uploads, render a download link
-    if (!media.mimeType?.startsWith('image')) {
-      return (
-        <a href={media.url!} rel="noopener noreferrer" download>
-          {media.filename}
-        </a>
-      )
+    if (isMedia(uploadNode.value) && (getMediaType(uploadNode.value) === MediaType.IMAGE || getMediaType(uploadNode.value) === MediaType.VIDEO)) {
+      return <PostVisualMedia media={uploadNode.value as Media} />
     }
 
-    // Render clickable images that expand on click (orientation detected on load)
-    return (
-      <ExpandableImage
-        src={media.url!}
-        alt={media.alt || media.filename || 'Image'}
-        width={media.width || 800}
-        height={media.height || 600}
-      />
-    )
+    return null
   },
   link: ({ node, nodesToJSX }) => {
     const linkNode = node as SerializedLinkNode
