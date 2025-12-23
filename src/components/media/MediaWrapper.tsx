@@ -11,12 +11,12 @@ export default function MediaWrapper({
     <div className="w-fit h-fit flex flex-col">
       {children}
       <div className="flex flex-row gap-1">
-        <a href={media.url!} target="_blank" rel="noopener noreferrer">
-          [View]
+        <a href={media.url!} download={media.filename!} rel="noopener noreferrer">
+          [Download]
         </a>
         <div>
           <span>File: </span>
-          <a href={media.url!} download={media.filename!} rel="noopener noreferrer">
+          <a href={media.url!} target="_blank" rel="noopener noreferrer">
             {media.filename}
           </a>
         </div>

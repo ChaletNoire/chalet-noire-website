@@ -6,9 +6,9 @@ import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical
 import type { SerializedUploadNode } from '@payloadcms/richtext-lexical'
 import type { SerializedAutoLinkNode, SerializedLinkNode } from '@payloadcms/richtext-lexical'
 import type { Media } from '@/payload-types'
-import { YouTubeEmbed, getYouTubeVideoId } from './YouTubeEmbed'
+import { YouTubeEmbed } from './Video'
 import PostImage from './PostImage'
-import { isMedia, getMediaType, MediaType } from './utils'
+import { isMedia, getMediaType, MediaType, getYouTubeVideoId } from './utils'
 import { PostVisualMedia } from './PostMedia'
 
 type Props = {
@@ -25,7 +25,11 @@ const jsxConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
       return null
     }
 
-    if (isMedia(uploadNode.value) && (getMediaType(uploadNode.value) === MediaType.IMAGE || getMediaType(uploadNode.value) === MediaType.VIDEO)) {
+    if (
+      isMedia(uploadNode.value) &&
+      (getMediaType(uploadNode.value) === MediaType.IMAGE ||
+        getMediaType(uploadNode.value) === MediaType.VIDEO)
+    ) {
       return <PostVisualMedia media={uploadNode.value as Media} />
     }
 

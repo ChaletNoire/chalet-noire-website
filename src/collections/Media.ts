@@ -27,13 +27,18 @@ export const Media: CollectionConfig = {
     {
       name: 'deliveryFormat',
       type: 'select',
+      label: 'Delivery Format',
+      admin: {
+        description:
+          'Select "Adaptive Video Stream" for HLS streams (.m3u8). The uploaded file should be the master playlist.',
+      },
       options: [
         {
           label: 'Normal',
           value: DeliveryFormat.NORMAL,
         },
         {
-          label: 'Adaptive Video Stream',
+          label: 'Adaptive Video Stream (HLS)',
           value: DeliveryFormat.ADAPTIVE_VIDEO_STREAM,
         },
       ],
@@ -48,9 +53,24 @@ export const Media: CollectionConfig = {
     {
       name: 'adaptiveVideoStreamIndexFile',
       type: 'text',
+      label: 'HLS Index File URL',
       required: false,
       admin: {
         condition: (data) => data?.deliveryFormat === DeliveryFormat.ADAPTIVE_VIDEO_STREAM,
+        description:
+          'Full URL to the .m3u8 master playlist file. If left empty, the uploaded file URL will be used.',
+      },
+      validate: (
+        value: string | null | undefined,
+        { data }: { data: { deliveryFormat?: string } },
+      ) => {
+        if (data?.deliveryFormat === DeliveryFormat.ADAPTIVE_VIDEO_STREAM) {
+          // If a value is provided, it should end with .m3u8
+          if (value && !value.endsWith('.m3u8')) {
+            return 'HLS index file must be a .m3u8 file'
+          }
+        }
+        return true
       },
     },
     {

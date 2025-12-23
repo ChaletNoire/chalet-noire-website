@@ -41,5 +41,11 @@ export const GlobalConfig: GlobalConfigType = {
       name: 'IntroText',
       type: 'text',
     },
+    {
+      name: 'BackgroundEmbroidery',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+    },
   ],
 }

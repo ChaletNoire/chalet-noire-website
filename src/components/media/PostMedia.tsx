@@ -2,6 +2,7 @@ import type { Media } from '@/payload-types'
 import { getMediaType, getPreviewSize, MediaType } from './utils'
 import MediaWrapper from './MediaWrapper'
 import Image from 'next/image'
+import { VideoPlayer } from './Video'
 
 const PREVIEW_SIZE = 200
 
@@ -17,7 +18,15 @@ export const PostVisualMedia = ({ media }: { media: Media }) => {
   if (isImage) {
     return (
       <MediaWrapper media={media}>
-        <Image src={media.url!} alt={media.alt} width={width} height={height} />
+        <Image src={media.url!} alt={media.alt} width={width} height={height} loading="lazy" />
+      </MediaWrapper>
+    )
+  }
+
+  if (isVideo) {
+    return (
+      <MediaWrapper media={media}>
+        <VideoPlayer media={media} />
       </MediaWrapper>
     )
   }

@@ -40,6 +40,26 @@
     color: inherit; /* Use the same color as the text */
     z-index: -1; /* Ensure it appears behind the original text */
   }
+
+  table tr {
+    @apply border-b border-gray-200;
+  }
+
+  table tr:last-child {
+    @apply border-b-0;
+  }
+
+  table td {
+    @apply pr-1;
+  }
+
+  table td:first-child {
+    @apply pl-2;
+  }
+
+  table td:last-child {
+    @apply pr-2;
+  }
 }
 
 @layer utilities {

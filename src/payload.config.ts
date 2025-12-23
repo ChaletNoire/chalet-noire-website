@@ -11,12 +11,14 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Posts } from './collections/Posts'
 import { Gallery } from './collections/Gallery'
+import { Shows } from './collections/Shows'
 
 import { GlobalConfig } from './globals/GlobalConfig'
 import { LandingPage } from './globals/LandingPage'
 import { Broadcast } from './globals/Broadcast'
 import { Socials } from './globals/Socials'
 import { Contact } from './globals/Contact'
+import { Announcement } from './globals/Announcement'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -98,8 +100,8 @@ export default buildConfig({
       ],
     },
   },
-  collections: [Users, Media, Posts, Gallery],
-  globals: [GlobalConfig, LandingPage, Broadcast, Socials, Contact],
+  collections: [Users, Media, Posts, Gallery, Shows],
+  globals: [GlobalConfig, LandingPage, Broadcast, Socials, Contact, Announcement],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

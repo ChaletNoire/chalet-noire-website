@@ -46,4 +46,23 @@ function getPreviewSize(media: Media, previewSize: number) {
   return { width: displayWidth, height: displayHeight }
 }
 
-export { MediaType, getMediaType, isMedia, getPreviewSize }
+/**
+ * Extract YouTube video ID from various YouTube URL formats
+ */
+function getYouTubeVideoId(url: string): string | null {
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\s?]+)/,
+    /youtube\.com\/shorts\/([^&\s?]+)/,
+  ]
+
+  for (const pattern of patterns) {
+    const match = url.match(pattern)
+    if (match?.[1]) {
+      return match[1]
+    }
+  }
+
+  return null
+}
+
+export { MediaType, getMediaType, isMedia, getPreviewSize, getYouTubeVideoId }

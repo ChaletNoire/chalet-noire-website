@@ -19,7 +19,7 @@ export default function Post({ post }: { post: Post }) {
   return (
     <div className={`w-full flex flex-col gap-4`}>
       <PostHeader post={post} />
-      <div className={`w-full pl-8`}>
+      <div className={`w-full`}>
         <RichText data={post.content} />
       </div>
     </div>

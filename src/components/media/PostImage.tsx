@@ -17,6 +17,7 @@ export default function PostImage({ media }: { media: Media; resolution: number 
         alt={media.alt}
         width={resolution}
         height={scaledHeight}
+        loading="lazy"
         className={`${isPortrait ? `max-w-[250px] h-auto` : `max-h-[250px] w-auto`}`}
       />
     </MediaWrapper>

@@ -7,6 +7,12 @@ import ConditionalWrapper from '@/components/ConditionalWrapper'
 import PageContainer from '@/components/PageContainer'
 import type { GlobalConfig } from '@/payload-types'
 
+const getBackgroundEmbroideryUrl = (globalConfig: GlobalConfig): string | null => {
+  const embroidery = globalConfig?.BackgroundEmbroidery
+  if (typeof embroidery !== 'object' || !embroidery?.url) return null
+  return embroidery.url
+}
+
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
@@ -14,6 +20,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const globalConfig = (await payload.findGlobal({
     slug: 'global-config',
   })) as GlobalConfig
+
+  const backgroundUrl = getBackgroundEmbroideryUrl(globalConfig)
 
   return (
     <html lang="en" className={lyon.variable}>
@@ -33,8 +41,21 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <ConditionalWrapper
           homePageContent={children}
           otherPagesContent={
-            <div className="py-2 px-4 flex flex-col items-center h-full">
-              <PageContainer globalConfig={globalConfig}>{children}</PageContainer>
+            <div className="relative flex flex-col items-center h-full min-h-screen">
+              {/* Background layer with opacity */}
+              {backgroundUrl && (
+                <div
+                  className="absolute inset-0 bg-repeat-y bg-top opacity-70 pointer-events-none bg-blend-darken "
+                  style={{
+                    backgroundImage: `url(${backgroundUrl})`,
+                    backgroundSize: '100% auto',
+                  }}
+                />
+              )}
+              {/* Content layer */}
+              <div className="relative z-10 max-w-3xl w-full">
+                <PageContainer globalConfig={globalConfig}>{children}</PageContainer>
+              </div>
             </div>
           }
         />

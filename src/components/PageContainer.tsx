@@ -10,7 +10,7 @@ interface PageContainerProps {
 
 export default function PageContainer({ children, globalConfig }: PageContainerProps) {
   return (
-    <div className="max-w-2xl w-full h-full min-h-[calc(100dvh+80px)] flex flex-col">
+    <div className="py-4 px-4 w-full h-full min-h-[calc(100dvh+80px)] flex flex-col bg-white text-sm">
       {globalConfig && <Banner globalConfig={globalConfig} />}
       <div className="w-full pt-6 flex-1">{children}</div>
       <div className="h-full flex justify-end items-end">

@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     posts: Post;
     gallery: Gallery;
+    shows: Show;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +83,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
+    shows: ShowsSelect<false> | ShowsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -97,6 +99,7 @@ export interface Config {
     broadcast: Broadcast;
     socials: Social;
     contact: Contact;
+    announcement: Announcement;
   };
   globalsSelect: {
     'global-config': GlobalConfigSelect<false> | GlobalConfigSelect<true>;
@@ -104,6 +107,7 @@ export interface Config {
     broadcast: BroadcastSelect<false> | BroadcastSelect<true>;
     socials: SocialsSelect<false> | SocialsSelect<true>;
     contact: ContactSelect<false> | ContactSelect<true>;
+    announcement: AnnouncementSelect<false> | AnnouncementSelect<true>;
   };
   locale: null;
   user: User & {
@@ -163,8 +167,14 @@ export interface User {
  */
 export interface Media {
   id: number;
+  /**
+   * Select "Adaptive Video Stream" for HLS streams (.m3u8). The uploaded file should be the master playlist.
+   */
   deliveryFormat: 'normal' | 'adaptive_video_stream';
   alt: string;
+  /**
+   * Full URL to the .m3u8 master playlist file. If left empty, the uploaded file URL will be used.
+   */
   adaptiveVideoStreamIndexFile?: string | null;
   orientation?: string | null;
   updatedAt: string;
@@ -218,6 +228,30 @@ export interface Gallery {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shows".
+ */
+export interface Show {
+  id: number;
+  date: string;
+  title: string;
+  performers: {
+    name: string;
+    id?: string | null;
+  }[];
+  recordings?:
+    | {
+        platform: 'NTS' | 'SoundCloud' | 'YouTube' | 'Vimeo' | 'Audio' | 'Video' | 'other';
+        label?: string | null;
+        url?: string | null;
+        media?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -255,6 +289,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'gallery';
         value: number | Gallery;
+      } | null)
+    | ({
+        relationTo: 'shows';
+        value: number | Show;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -367,6 +405,31 @@ export interface GallerySelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shows_select".
+ */
+export interface ShowsSelect<T extends boolean = true> {
+  date?: T;
+  title?: T;
+  performers?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  recordings?:
+    | T
+    | {
+        platform?: T;
+        label?: T;
+        url?: T;
+        media?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -417,6 +480,7 @@ export interface GlobalConfig {
   Herald?: (number | null) | Media;
   Logo: number | Media;
   IntroText?: string | null;
+  BackgroundEmbroidery?: (number | null) | Media;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -471,6 +535,30 @@ export interface Contact {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcement".
+ */
+export interface Announcement {
+  id: number;
+  AnnouncementText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "global-config_select".
  */
 export interface GlobalConfigSelect<T extends boolean = true> {
@@ -480,6 +568,7 @@ export interface GlobalConfigSelect<T extends boolean = true> {
   Herald?: T;
   Logo?: T;
   IntroText?: T;
+  BackgroundEmbroidery?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -529,6 +618,16 @@ export interface ContactSelect<T extends boolean = true> {
   'Booking Email'?: T;
   'Booking Mail Subject Line'?: T;
   'Contact Email'?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcement_select".
+ */
+export interface AnnouncementSelect<T extends boolean = true> {
+  AnnouncementText?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
