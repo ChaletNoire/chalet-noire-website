@@ -5,23 +5,10 @@ import type { Media } from '@/payload-types'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 
-const BroadCastStatus = ({
-  live,
-  image,
-}: {
-  live: boolean
-  image: (number | null) | Media | undefined
-}) => {
-  if (!image || typeof image === 'number' || !image.url) return null
-
+const BroadCastStatus = ({ live }: { live: boolean }) => {
   return (
-    <div className="h-[60px] banner-border-2">
-      <img
-        src={image.url}
-        alt="broadcast-status"
-        className="h-full object-cover md:object-contain md:object-left"
-      />
-      <div className="absolute top-0 justify-center items-center text-white flex h-full uppercase text-lg font-bold text-center w-full">
+    <div className="banner-border-2 px-2">
+      <div className="top-0 justify-center items-center flex h-full uppercase text-lg font-bold text-center w-full text-white">
         {live ? 'Live Now' : 'Offline'}
       </div>
     </div>
@@ -60,7 +47,7 @@ export default async function HomePage() {
   return (
     <div className="bg-black text-white w-full overscroll-none h-[100dvh] flex justify-center items-center flex-col gap-4 relative">
       <div className="absolute top-10 left-10 md:left-30">
-        <BroadCastStatus live={broadcast?.Live ?? false} image={siteInfo?.BannerImage} />
+        <BroadCastStatus live={broadcast?.Live ?? false} />
       </div>
       {!broadcast?.Live ? (
         <div className="md:w-[400px] md:h-[400px] w-[300px] h-[300px] blur-[1px] m-10">

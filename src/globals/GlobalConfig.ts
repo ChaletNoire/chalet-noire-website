@@ -20,18 +20,6 @@ export const GlobalConfig: GlobalConfigType = {
       required: true,
     },
     {
-      name: 'BannerImage',
-      type: 'upload',
-      relationTo: 'media',
-      required: false,
-    },
-    {
-      name: 'Herald',
-      type: 'upload',
-      relationTo: 'media',
-      required: false,
-    },
-    {
       name: 'Logo',
       type: 'upload',
       relationTo: 'media',

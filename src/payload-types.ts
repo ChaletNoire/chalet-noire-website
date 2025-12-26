@@ -476,8 +476,6 @@ export interface GlobalConfig {
   id: number;
   Title: string;
   SubTitle: string;
-  BannerImage?: (number | null) | Media;
-  Herald?: (number | null) | Media;
   Logo: number | Media;
   IntroText?: string | null;
   BackgroundEmbroidery?: (number | null) | Media;
@@ -564,8 +562,6 @@ export interface Announcement {
 export interface GlobalConfigSelect<T extends boolean = true> {
   Title?: T;
   SubTitle?: T;
-  BannerImage?: T;
-  Herald?: T;
   Logo?: T;
   IntroText?: T;
   BackgroundEmbroidery?: T;

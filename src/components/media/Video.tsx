@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import Hls from 'hls.js'
 import { DeliveryFormat } from '@/enums/Media'
 
-const VideoPlayerClasses = 'max-h-[200px] h-full w-auto border-2 border-black'
+const VideoPlayerClasses = 'block max-h-[200px] w-auto border-2 border-black bg-black'
 
 type VideoPlayerProps = {
   media: Media
@@ -18,6 +18,12 @@ export function VideoPlayer({ media, className, ...props }: VideoPlayerProps) {
   useEffect(() => {
     if (!media.url || !videoRef.current) return
 
+    // Clean up any existing HLS instance first
+    if (hlsRef.current) {
+      hlsRef.current.destroy()
+      hlsRef.current = null
+    }
+
     const isAdaptiveStream = media.deliveryFormat === DeliveryFormat.ADAPTIVE_VIDEO_STREAM
     // Use adaptiveVideoStreamIndexFile if set, otherwise fall back to the media URL
     const hlsUrl = media.adaptiveVideoStreamIndexFile || media.url
@@ -25,35 +31,36 @@ export function VideoPlayer({ media, className, ...props }: VideoPlayerProps) {
     // ---- CASE 1: ADAPTIVE VIDEO STREAM (HLS) ----
     if (isAdaptiveStream) {
       if (Hls.isSupported()) {
-        console.log('HLS is supported')
-        console.log('hlsUrl', hlsUrl)
-        hlsRef.current = new Hls()
-        hlsRef.current.loadSource(hlsUrl)
-        hlsRef.current.attachMedia(videoRef.current)
-        hlsRef.current.on(Hls.Events.ERROR, (event, data) => {
-          console.error('HLS error', event, data)
+        const hls = new Hls()
+        hlsRef.current = hls
+        hls.loadSource(hlsUrl)
+        hls.attachMedia(videoRef.current)
+        hls.on(Hls.Events.ERROR, (_event, data) => {
+          // Only log fatal errors - non-fatal errors are often recoverable
+          if (data.fatal) {
+            console.error('HLS fatal error:', data.type, data.details)
+          }
         })
       } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
         // Native HLS (Safari)
         videoRef.current.src = hlsUrl
-      } else {
-        console.warn('HLS not supported in this browser.')
       }
-
-      return () => {
-        if (hlsRef.current) {
-          hlsRef.current.destroy()
-          hlsRef.current = null
-        }
-      }
+    } else {
+      // ---- CASE 2: NORMAL VIDEO (MP4, WEBM, MOV...) ----
+      videoRef.current.src = media.url
     }
 
-    // ---- CASE 2: NORMAL VIDEO (MP4, WEBM, MOV...) ----
-    videoRef.current.src = media.url
+    // Cleanup function - runs on unmount or before next effect
+    return () => {
+      if (hlsRef.current) {
+        hlsRef.current.destroy()
+        hlsRef.current = null
+      }
+    }
   }, [media])
 
   return (
-    <div className={`h-fit ${className ?? ''}`}>
+    <div className={`h-fit leading-[0] ${className ?? ''}`}>
       <video ref={videoRef} controls preload="none" className={VideoPlayerClasses} {...props} />
     </div>
   )

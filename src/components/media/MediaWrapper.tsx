@@ -8,8 +8,8 @@ export default function MediaWrapper({
   children: React.ReactNode
 }) {
   return (
-    <div className="w-fit h-fit flex flex-col">
-      {children}
+    <div className="w-fit h-fit flex flex-col leading-normal">
+      <div className="leading-[0]">{children}</div>
       <div className="flex flex-row gap-1">
         <a href={media.url!} download={media.filename!} rel="noopener noreferrer">
           [Download]

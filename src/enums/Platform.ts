@@ -17,3 +17,4 @@ export const PlatformOptions = [
   { label: 'Video Self-Hosted', value: Platform.VIDEO_SELF_HOSTED },
   { label: 'Other', value: Platform.OTHER },
 ]
+
