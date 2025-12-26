@@ -7,10 +7,11 @@ import { BroadcastStatus } from '@/components/BroadcastStatus'
 export default async function HomePage() {
   const payload = await getPayload({ config })
 
-  const [siteInfo, landingPage, broadcast] = await Promise.all([
+  const [siteInfo, landingPage, broadcast, announcement] = await Promise.all([
     payload.findGlobal({ slug: 'global-config' as any }),
     payload.findGlobal({ slug: 'landing-page' }),
     payload.findGlobal({ slug: 'broadcast' }),
+    payload.findGlobal({ slug: 'announcement' }),
   ])
 
   // Get logo URL from global config
@@ -34,6 +35,7 @@ export default async function HomePage() {
         initialData={{
           live: broadcast?.Live ?? false,
           embed: broadcast?.['Live Embed'] ?? '',
+          announcementText: announcement?.AnnouncementText ?? null,
         }}
         logoUrl={logoUrl}
       />

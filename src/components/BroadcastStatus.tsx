@@ -1,44 +1,19 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
 import LogoRotating from '@/components/graphics/LogoRotating'
-
-interface BroadcastData {
-  live: boolean
-  embed: string
-}
-
-const DEFAULT_POLL_INTERVAL_MS = 10 * 1000 // 1 minute
+import { useBroadcastPolling, BroadcastData } from '@/hooks/useBroadcastPolling'
 
 export function BroadcastStatus({
   initialData,
   logoUrl,
-  pollIntervalMs = DEFAULT_POLL_INTERVAL_MS,
+  pollIntervalMs,
 }: {
   initialData: BroadcastData
   logoUrl: string
-  /** Polling interval in milliseconds (default: 60000 = 1 minute) */
+  /** Polling interval in milliseconds (default: 10000 = 10 seconds) */
   pollIntervalMs?: number
 }) {
-  const [broadcast, setBroadcast] = useState(initialData)
-
-  const fetchStatus = useCallback(async () => {
-    try {
-      const res = await fetch('/api/broadcast-status', {
-        cache: 'no-store',
-      })
-      if (res.ok) {
-        setBroadcast(await res.json())
-      }
-    } catch (e) {
-      console.error('Failed to fetch broadcast status:', e)
-    }
-  }, [])
-
-  useEffect(() => {
-    const interval = setInterval(fetchStatus, pollIntervalMs)
-    return () => clearInterval(interval)
-  }, [fetchStatus, pollIntervalMs])
+  const { broadcast } = useBroadcastPolling(initialData, pollIntervalMs)
 
   return (
     <>

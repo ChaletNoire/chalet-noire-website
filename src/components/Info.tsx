@@ -1,7 +1,7 @@
 import { getPayload } from 'payload'
 import React from 'react'
 import config from '@/payload.config'
-import Announcement from '@/components/Announcement'
+import { Announcement } from '@/components/Announcement'
 
 async function OutsideLinks() {
   const payload = await getPayload({ config })
@@ -49,14 +49,24 @@ async function Booking() {
 
 export default async function Info() {
   const payload = await getPayload({ config })
-  const globalConfig = await payload.findGlobal({
-    slug: 'global-config',
-  })
+
+  const [globalConfig, broadcast, announcement] = await Promise.all([
+    payload.findGlobal({ slug: 'global-config' }),
+    payload.findGlobal({ slug: 'broadcast' }),
+    payload.findGlobal({ slug: 'announcement' }),
+  ])
+
   const infoText = (globalConfig as any)?.IntroText
+  const broadcastData = {
+    live: broadcast?.Live ?? false,
+    embed: broadcast?.['Live Embed'] ?? '',
+    announcementText: announcement?.AnnouncementText ?? null,
+  }
+
   return (
     <div className="w-full h-full flex flex-col">
       <p className="text-justify text-justify-last-left md:max-w-[600px]">{infoText}</p>
-      <Announcement />
+      <Announcement initialData={broadcastData} />
       <Booking />
       <OutsideLinks />
     </div>

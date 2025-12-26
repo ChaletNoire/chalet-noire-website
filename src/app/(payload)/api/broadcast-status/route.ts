@@ -8,12 +8,15 @@ export const dynamic = 'force-dynamic'
 
 export async function GET() {
   const payload = await getPayload({ config })
-  const broadcast = await payload.findGlobal({
-    slug: 'broadcast',
-  })
+
+  const [broadcast, announcement] = await Promise.all([
+    payload.findGlobal({ slug: 'broadcast' }),
+    payload.findGlobal({ slug: 'announcement' }),
+  ])
 
   return NextResponse.json({
     live: broadcast?.Live ?? false,
     embed: broadcast?.['Live Embed'] ?? '',
+    announcementText: announcement?.AnnouncementText ?? null,
   })
 }
