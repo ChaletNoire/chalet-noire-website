@@ -30,7 +30,9 @@ async function Navigation() {
 
   return (
     <div className="w-full flex gap-2 md:gap-4 text-base">
-      <NavLink href="/blog">Blog({postsResult.totalDocs})</NavLink>
+      <NavLink href="/blog" hideIndicatorSpace>
+        Blog({postsResult.totalDocs})
+      </NavLink>
       <NavLink href="/shows" className="justify-self-center">
         Shows({showsResult.totalDocs})
       </NavLink>

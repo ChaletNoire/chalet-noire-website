@@ -1,19 +1,17 @@
-import Link from 'next/link'
+import NavLink from './NavLink'
 
 /*
-      <Link href="/legal">Legal</Link>
-      <Link href="/contact">Contact</Link>
+      <NavLink href="/legal">Legal</NavLink>
+      <NavLink href="/contact">Contact</NavLink>
 */
 
 export default function Footer() {
   return (
-    <div className="w-full flex flex-row gap-4 pb-4">
-      <Link href="/guestbook" prefetch={true}>
+    <div className="w-full flex flex-row gap-4 pb-4 pt-8">
+      <NavLink href="/guestbook" hideIndicatorSpace>
         Guestbook
-      </Link>
-      <Link href="/info" prefetch={true}>
-        Site Info
-      </Link>
+      </NavLink>
+      <NavLink href="/info">Site Info</NavLink>
     </div>
   )
 }

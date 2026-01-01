@@ -19,6 +19,7 @@ import { Broadcast } from './globals/Broadcast'
 import { Socials } from './globals/Socials'
 import { Contact } from './globals/Contact'
 import { Announcement } from './globals/Announcement'
+import { Guestbook } from './globals/Guestbook'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -101,7 +102,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Posts, Gallery, Shows],
-  globals: [GlobalConfig, LandingPage, Broadcast, Socials, Contact, Announcement],
+  globals: [GlobalConfig, LandingPage, Broadcast, Socials, Contact, Announcement, Guestbook],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

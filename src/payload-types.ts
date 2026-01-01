@@ -100,6 +100,7 @@ export interface Config {
     socials: Social;
     contact: Contact;
     announcement: Announcement;
+    guestbook: Guestbook;
   };
   globalsSelect: {
     'global-config': GlobalConfigSelect<false> | GlobalConfigSelect<true>;
@@ -108,6 +109,7 @@ export interface Config {
     socials: SocialsSelect<false> | SocialsSelect<true>;
     contact: ContactSelect<false> | ContactSelect<true>;
     announcement: AnnouncementSelect<false> | AnnouncementSelect<true>;
+    guestbook: GuestbookSelect<false> | GuestbookSelect<true>;
   };
   locale: null;
   user: User & {
@@ -557,6 +559,22 @@ export interface Announcement {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "guestbook".
+ */
+export interface Guestbook {
+  id: number;
+  GuestbookEntries?:
+    | {
+        name?: string | null;
+        message?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "global-config_select".
  */
 export interface GlobalConfigSelect<T extends boolean = true> {
@@ -624,6 +642,22 @@ export interface ContactSelect<T extends boolean = true> {
  */
 export interface AnnouncementSelect<T extends boolean = true> {
   AnnouncementText?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "guestbook_select".
+ */
+export interface GuestbookSelect<T extends boolean = true> {
+  GuestbookEntries?:
+    | T
+    | {
+        name?: T;
+        message?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

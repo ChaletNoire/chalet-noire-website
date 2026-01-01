@@ -20,7 +20,7 @@ export default async function Blog() {
       <Info />
       <hr className="mt-2" />
       {posts.docs.map((post) => (
-        <div className="w-full py-8" key={post.id}>
+        <div className="w-full pt-8" key={post.id}>
           <Post post={post} />
         </div>
       ))}
